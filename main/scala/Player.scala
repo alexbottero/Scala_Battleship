@@ -1,7 +1,7 @@
 /**
   * Created by alexandre on 01/10/2018.
   */
-case class Player(ships:List[Ship], name:String,shots:List[Cell]) {
+case class Player(ships:List[Ship]=List(), name:String,shots:List[Cell]=List()) {
 
   def placeShip(player: Player,ship: Ship): Player ={
     if (!player.lapShips(ship,player)) player.copy(ships=player.ships:+ship)

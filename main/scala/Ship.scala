@@ -12,7 +12,7 @@ case class Ship(cells:List[Cell],lengthShip: Int,sense:Char) {
     else if (cell == ship.cells.head) true
     else isTouch(cell,ship.copy(cells=ship.cells.tail))
   }
-
+  
   def removeCell(cell: Cell,ship: Ship):Ship=ship.copy(cells=ship.cells.filter(_!=cell),lengthShip=ship.cells.filter(_!=cell).length)
 
 

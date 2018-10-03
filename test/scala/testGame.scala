@@ -1,7 +1,7 @@
 /**
   * Created by alexandre on 03/10/2018.
   */
-object testGame extends App{
+/*object testGame extends App{
 
   def testCheckCoord(lengthShip:Int,sense:Char,startCell:Cell,heightGrid:Int,lengthGrid:Int,game: Game):Unit={
     println(game.checkCoord(lengthShip,sense,startCell,heightGrid,lengthGrid))
@@ -27,4 +27,4 @@ object testGame extends App{
   testCheckCoord(3,'h',cell4,10,10,game)
   println("Expected result: false ")
   testCheckCoord(3,'v',cell5,10,10,game)
-}
+}*/
