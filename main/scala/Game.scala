@@ -1,16 +1,14 @@
 /**
   * Created by alexandre on 02/10/2018.
   */
-class Game extends App{
-
-
+case class Game() {
 
 
   def checkCoord(lengthShip:Int,sense:Char,startCell:Cell,heightGrid:Int,lengthGrid:Int):Boolean={
     if(startCell.y <1 || startCell.y>heightGrid || startCell.x <1 ||startCell.x>lengthGrid) false
     else if(lengthShip==1)true
-    else if (sense=='v')   checkCoord(lengthShip-1,sense,startCell.copy(y=startCell.y+1),heightGrid,lengthGrid)
-    else   checkCoord(lengthShip-1,sense,Cell(startCell.x+1,startCell.y),heightGrid,lengthGrid)
+    else if (sense=='v') checkCoord(lengthShip-1,sense,startCell.copy(y=startCell.y+1),heightGrid,lengthGrid)
+    else   checkCoord(lengthShip-1,sense,startCell.copy(x=startCell.x+1),heightGrid,lengthGrid)
   }
 
 
