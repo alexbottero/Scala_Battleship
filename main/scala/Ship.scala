@@ -3,25 +3,26 @@ import sun.security.util.Length
 /**
   * Created by alexandre on 01/10/2018.
   */
-case class Ship(cells:List[Cell],touchCells:List[Cell],lengthShip: Int,sense:Char) {
+case class Ship(cells:List[Cell],lengthShip: Int,sense:Char) {
 
-  def isSink(cells:List[Cell],touchCells:List[Cell]):Boolean= cells.length==touchCells.length
+  def isSink(ship: Ship):Boolean = ship.cells.isEmpty
 
-  def isTouch(cell: Cell,cells:List[Cell]):Boolean={
-    if (cells.isEmpty) false
-    else if (cell == cells.head) true
-    else isTouch(cell,cells.tail)
+  def isTouch(cell: Cell,ship: Ship):Boolean={
+    if (ship.cells.isEmpty) false
+    else if (cell == ship.cells.head) true
+    else isTouch(cell,ship.copy(cells=ship.cells.tail))
   }
 
-  def addCellTouche(cell: Cell,cells:List[Cell]):List[Cell]= cell :: cells
+  def removeCell(cell: Cell,ship: Ship):Ship=ship.copy(cells=ship.cells.filter(_!=cell),lengthShip=ship.cells.filter(_!=cell).length)
 
-  def lapShip(ship1: List[Cell],ship2: List[Cell]): Boolean ={
-    if (ship1.isEmpty) false
-    else if (ship2.contains(ship1.head)) true
-    else lapShip(ship1.tail,ship2)
+
+
+  def lapShip(ship1: Ship,ship2: Ship): Boolean ={
+    if (ship1.cells.isEmpty) false
+    else if (ship2.cells.contains(ship1.cells.head)) true
+    else lapShip(ship1.copy(cells=ship1.cells.tail,lengthShip=ship1.lengthShip-1),ship2)
 
   }
-
 
 
 }
