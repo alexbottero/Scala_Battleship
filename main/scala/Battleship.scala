@@ -23,6 +23,7 @@ object Battleship extends App{
         val players = getNamePlayers(typeG)
         val player1=HumanPlayer(name=players._1,new Grid(HEIGHT_GRID,LENGTH_GRID))
         val player2=HumanPlayer(name = players._2,new Grid(HEIGHT_GRID,LENGTH_GRID))
+        print(player1.grid.displayMyGrid())
 
         val playersWithShips1=placeShips(ships,player1)
         val playersWithShips2=placeShips(ships,player2)
@@ -36,6 +37,7 @@ object Battleship extends App{
       case _=>{
         val players = getNamePlayers(typeG)
         val player1=HumanPlayer(name=players._1,new Grid(HEIGHT_GRID,LENGTH_GRID))
+
 
         val player2=typeG match {
           case 2=>AILevel1(grid=new Grid(HEIGHT_GRID,LENGTH_GRID),random=new Random())
@@ -55,8 +57,8 @@ object Battleship extends App{
     val player=game.p1
     val enemyPlayer=game.p2
     println(player.getName+" is your turn")
-    println(player.getGrid().displayMyGrid())
-    println(player.getGrid().displayEnemyGrid())
+    println(player.getGrid().displayGrid())
+    println(player.getGrid().displayGrid())
     val shoot=player.play()
     println("Your shoot is :" + shoot._1+" "+shoot._2)
 
