@@ -1,6 +1,7 @@
 /**
   * Created by alexandre on 02/10/2018.
   */
+/*
 object testPlayer extends App{
   val player=Player(List(),"alexandre",List())
   val player2=Player(List(Ship(List(Cell(1,1,'O'),Cell(1,2,'O')),2,'v'),Ship(List(Cell(9,8,'O'),Cell(4,4,'O')),2,'h')),"vincent",List())
@@ -41,3 +42,4 @@ object testPlayer extends App{
 
 
 }
+*/

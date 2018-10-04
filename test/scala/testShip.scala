@@ -1,7 +1,7 @@
 /**
   * Created by alexandre on 02/10/2018.
   */
-object testShip extends App{
+/*object testShip extends App{
 
 
 
@@ -62,4 +62,4 @@ object testShip extends App{
   testLapShip(ship3,ship4)
 
 
-}
+}*/

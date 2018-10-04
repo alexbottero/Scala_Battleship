@@ -3,6 +3,7 @@
   */
 
 
+/*
 object  testCell extends App{
 
 
@@ -18,3 +19,4 @@ object  testCell extends App{
   println("Test changeState \n Expected result: true")
   testChangeState(c)
 }
+*/

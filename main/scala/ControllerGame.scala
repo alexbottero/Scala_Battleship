@@ -3,6 +3,7 @@ import scala.util.Random
 /**
   * Created by alexandre on 03/10/2018.
   */
+/*
 object ControllerGame extends App{
 
   // CONST
@@ -35,10 +36,9 @@ object ControllerGame extends App{
     val sense=getSense()
     if (lengths.isEmpty) player
     else if (checkCoord(lengths.head,sense,cell,HEIGHT_GRID,LENGTH_GRID)){
-      val ship=Ship()
+
     }
 
-    el
   }
 
   def getCoord():Cell={
@@ -121,3 +121,4 @@ object ControllerGame extends App{
   }
 
 }
+*/
