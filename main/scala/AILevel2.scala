@@ -3,7 +3,7 @@ import scala.util.Random
 /**
   * Created by alexandre on 04/10/2018.
   */
-case class AILevel1(name:String="AI Level 1",grid: Grid,random: Random) extends Player(name,grid){
+case class AILevel2(name:String="AI Level 2",grid: Grid,shots:List[(Int,Int,String)]=List(),random: Random) extends Player(name,grid,shots) {
 
   val senseValue=Array('h','v')
   val alphabetValue= Array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
@@ -25,8 +25,6 @@ case class AILevel1(name:String="AI Level 1",grid: Grid,random: Random) extends 
   }
 
   override def play(): (Int, Int) = {
-    val x = random.nextInt(grid.columns)
-    val y = random.nextInt(grid.rows)
-    (x,y)
+    (3,4)
   }
 }

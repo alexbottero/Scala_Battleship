@@ -1,7 +1,7 @@
 /**
   * Created by alexandre on 04/10/2018.
   */
-case class HumanPlayer(name:String,grid: Grid,shots:List[(Int,Int,String)]) extends Player(name,grid,shots){
+case class HumanPlayer(name:String,grid: Grid) extends Player(name,grid){
 
 
   override def placeShip(ship: Ship): Player = {
@@ -17,7 +17,6 @@ case class HumanPlayer(name:String,grid: Grid,shots:List[(Int,Int,String)]) exte
         print("bad position for the ship")
         placeShip(ship)
       }
-
     }
 
   }

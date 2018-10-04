@@ -101,6 +101,9 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[Cell]],ships:List[Ship])
     }
   }
 
+  def displayMyGrid():String="my grid"
+  def displayEnemyGrid():String="pas ma grid"
+
   def checkInput(x:Int, y:Int, sense:Char,rows:Int,columns:Int):Boolean={
 
     if(y <0 || y>rows-1|| x <0 ||x>columns-1 || sense!='h'||sense!='v') false
