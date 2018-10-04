@@ -1,10 +1,12 @@
 /**
   * Created by alexandre on 01/10/2018.
   */
-abstract case class Player(name:String, grid: Grid,shots:List[(Int,Int,String)]=List()) {
+abstract class Player( name:String,  grid: Grid, shots:List[(Int,Int,String)]=List()) {
 
   def placeShip(ship: Ship):Player
   def play():(Int,Int)
+
+
 
   def loose():Boolean={
     if (this.grid.ships.forall(s=>s.isSunk()))true else false
@@ -15,22 +17,11 @@ abstract case class Player(name:String, grid: Grid,shots:List[(Int,Int,String)]=
     else true
   }
 
+  def copyForGrid(grid: Grid): Player
+  def copyForShots(shots: List[(Int,Int,String)]): Player
 
-  /*def placeShip(player: Player,ship: Ship): Player ={
-    if (!player.lapShips(ship,player)) player.copy(ships=player.ships:+ship)
-    else player
-
-  }
-  def playerLoose(player: Player):Boolean=player.ships.isEmpty
-
-  def add
-  def removeShip(ship: Ship,player: Player):Player=player.copy(ships=player.ships.filter(_!=ship))
-
-  def lapShips(ship: Ship, player: Player): Boolean = {
-    if (player.ships.isEmpty) false
-    else if (ship.lapShip(ship,player.ships.head)) true
-    else lapShips(ship,player.copy(ships=player.ships.tail))
-  }
-*/
+  def getName():String=name
+  def getGrid():Grid=grid
+  def getShots():List[(Int,Int,String)]=shots
 
 }

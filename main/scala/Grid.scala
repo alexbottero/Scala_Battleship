@@ -71,7 +71,7 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[Cell]],ships:List[Ship])
         ("Already hit",None, this.copy())
       } else {
         val newGrid = this.updateGrid(this.grid, Array((x,y)), this.grid(x)(y).copy(value = "H"))
-        val hitShip = this.ships.filter(_.id == this.grid(x)(y).value).head.isTouch()
+        val hitShip = this.ships.filter(_.id == this.grid(x)(y).value).head.touch()
         val newShips = this.ships.filterNot(_.id == this.grid(x)(y).value) :+ hitShip
 
         (if(hitShip.isSunk()) "Sunk" else "Hit",Some(hitShip),this.copy(ships=newShips,grid=newGrid))

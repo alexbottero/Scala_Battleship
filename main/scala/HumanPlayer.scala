@@ -1,7 +1,7 @@
 /**
   * Created by alexandre on 04/10/2018.
   */
-case class HumanPlayer(name:String,grid: Grid) extends Player(name,grid){
+case class HumanPlayer(name:String,grid: Grid,shots:List[(Int,Int,String)]=List()) extends Player(name,grid){
 
 
   override def placeShip(ship: Ship): Player = {
@@ -57,4 +57,8 @@ case class HumanPlayer(name:String,grid: Grid) extends Player(name,grid){
       case _: Exception => enterSense()
     }
   }
+
+  override def copyForGrid(grid: Grid): Player = this.copy(grid=grid)
+
+  override def copyForShots(shots: List[(Int, Int, String)]): Player = this.copy(shots=shots)
 }

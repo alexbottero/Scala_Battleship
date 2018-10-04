@@ -3,5 +3,6 @@
   */
 
 case class Cell(value:String){
+
   override def toString: String = value.toString
 }
