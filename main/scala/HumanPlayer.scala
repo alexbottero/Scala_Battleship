@@ -14,7 +14,7 @@ case class HumanPlayer(name:String,grid: Grid,shots:List[(Int,Int,String)]=List(
       this.copy(grid=newGrid)
     }catch{
       case _:Exception=>{
-        print("bad position for the ship")
+        println("bad position for the ship")
         placeShip(ship)
       }
     }

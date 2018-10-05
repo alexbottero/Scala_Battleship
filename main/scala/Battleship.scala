@@ -47,7 +47,8 @@ object Battleship extends App{
         }
         val playersWithShips1=placeShips(ships,player1)
         val playersWithShips2=placeShips(ships,player2)
-        gameLoop(Game(player1,player2,player1))
+        println(playersWithShips1.getName()+ " Start the game")
+        gameLoop(Game(playersWithShips1,playersWithShips2,playersWithShips1))
       }
 
 
