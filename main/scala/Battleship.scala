@@ -17,13 +17,14 @@ object Battleship extends App{
   def initLoop(): Unit = {
     println("--------- BattleShip----------")
     val typeG = menu()
-    val ships=List(Ship(1,2,2),Ship(2,3,3),Ship(3,3,3),Ship(4,4,4), Ship(5,5,5))
+    //Ship(3,3,3),Ship(4,4,4), Ship(5,5,5)
+    val ships=List(Ship(1,2,2),Ship(2,3,3))
     typeG match {
       case 1=>{
         val players = getNamePlayers(typeG)
         val player1=HumanPlayer(name=players._1,new Grid(HEIGHT_GRID,LENGTH_GRID))
         val player2=HumanPlayer(name = players._2,new Grid(HEIGHT_GRID,LENGTH_GRID))
-        print(player1.grid.displayMyGrid())
+        print(player1.grid.displayGrid())
 
         val playersWithShips1=placeShips(ships,player1)
         val playersWithShips2=placeShips(ships,player2)
@@ -44,6 +45,9 @@ object Battleship extends App{
           case 3=> AILevel2(grid=new Grid(HEIGHT_GRID,LENGTH_GRID),random=new Random())
           case 4=> AILevel1(grid=new Grid(HEIGHT_GRID,LENGTH_GRID),random=new Random())
         }
+        val playersWithShips1=placeShips(ships,player1)
+        val playersWithShips2=placeShips(ships,player2)
+        gameLoop(Game(player1,player2,player1))
       }
 
 
@@ -52,27 +56,32 @@ object Battleship extends App{
   }
 
 
-  def gameLoop(game: Game): Option[Game] ={
+  def gameLoop(game: Game):Unit ={
 
     val player=game.p1
     val enemyPlayer=game.p2
     println(player.getName+" is your turn")
-    println(player.getGrid().displayGrid())
-    println(player.getGrid().displayGrid())
     val shoot=player.play()
     println("Your shoot is :" + shoot._1+" "+shoot._2)
 
-    val result =enemyPlayer.getGrid().shootGrid(shoot._1,shoot._2)
+    println(enemyPlayer.getGrid().displayGrid())
+
+    val result=enemyPlayer.getGrid().shootGrid(shoot._2,shoot._1)
+    print(result._3.displayGrid())
     println(result._1)
     val newShots=player.getShots():+(shoot._1,shoot._2,result._1)
     val enemyPlayerUpdated=enemyPlayer.copyForGrid(grid=result._3)
     val playerUpdated=player.copyForShots(shots=newShots)
+
+    println(enemyPlayerUpdated.getGrid().displayGrid())
+
+
     if(enemyPlayerUpdated.loose()){
       println(player.getName() +" Win")
-      gameLoop(Game(enemyPlayer,enemyPlayerUpdated,player))
+      endLoop(Game(enemyPlayer,enemyPlayerUpdated,player))
     }
     else {
-      gameLoop(Game(enemyPlayer,enemyPlayerUpdated,player))
+      gameLoop(Game(enemyPlayerUpdated,playerUpdated,player))
     }
   }
 
@@ -118,6 +127,10 @@ object Battleship extends App{
         (namePlayer1,"AI")
       }
     }
+  }
+
+  def endLoop(game: Game): Unit ={
+    print("End of game")
   }
 
 }

@@ -30,5 +30,5 @@ case class AILevel2(name:String="AI Level 2",grid: Grid,shots:List[(Int,Int,Stri
 
   override def copyForGrid(grid: Grid): Player = this.copy(grid=grid)
 
-  override def copyForShots(shots: List[(Int, Int, String)]): Player = this.copy(grid=grid)
+  override def copyForShots(shots: List[(Int, Int, String)]): Player = ???
 }

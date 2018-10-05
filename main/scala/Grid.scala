@@ -34,9 +34,11 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[String]],ships:List[Ship
   }
 
   def updateGrid(grid:Array[Array[String]], cellsToUpdate:Array[(Int,Int)], newCell: String): Array[Array[String]] ={
+
     if (cellsToUpdate.length==0) grid
     else {
       val coordCellUpdate=cellsToUpdate.head
+      println(coordCellUpdate+"  ")
       val newGrid=Array.ofDim[String](this.rows,this.columns)
       grid.zipWithIndex.foreach{
         case(row,i) => {
@@ -44,8 +46,8 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[String]],ships:List[Ship
             row.zipWithIndex.foreach{
               case(value, j) => {
                 if(j == coordCellUpdate._1) {
-                  newGrid(j)(i) = newCell
-                }
+                  newGrid(i)(j) = newCell
+                  }
                 else {
                   newGrid(i)(j) = value
                 }
@@ -62,7 +64,6 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[String]],ships:List[Ship
   }
 
   def futureCellsOfShip(x:Int,y:Int,sense:Char,shipSize:Int,cellsShip:Array[(Int,Int)]): Array[(Int,Int)] ={
-    println((x,y))
     if (shipSize==1) cellsShip:+(x,y)
     else{
       val newCellsShip=cellsShip:+(x,y)
@@ -79,11 +80,11 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[String]],ships:List[Ship
 
         ("Already hit",None, this.copy())
       } else {
-        val newGrid = this.updateGrid(this.grid, Array((x,y)),  "H")
-        val hitShip = this.ships.filter(_.id == this.grid(x)(y)).head.touch()
-        val newShips = this.ships.filterNot(_.id == this.grid(x)(y)) :+ hitShip
+        val newGrid = this.updateGrid(this.grid, Array((y,x)),  "H")
+        val hitShip = this.ships.filter(_.id.toString == this.grid(x)(y)).head.touch()
+        val newShips = this.ships.filterNot(_.id.toString == this.grid(x)(y)) :+ hitShip
 
-        (if(hitShip.isSunk()) "Sunk" else "Hit",Some(hitShip),this.copy(ships=newShips,grid=newGrid))
+        (if(hitShip.isSunk()) "Sunk" else "Hit", Some(hitShip),this.copy(ships=newShips,grid=newGrid))
       }
 
     } else {
@@ -95,16 +96,16 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[String]],ships:List[Ship
 
   def letterToNumber(char: Char): Int = {
     char match {
-      case 'A' | 'a' => 1
-      case 'B' | 'b' => 2
-      case 'C' | 'c' => 3
-      case 'D' | 'd' => 4
-      case 'E' | 'e' => 5
-      case 'F' | 'f' => 6
-      case 'I' | 'i' => 7
-      case 'J' | 'j' => 8
-      case 'K' | 'k' => 9
-      case 'L' | 'l' => 10
+      case 'A' | 'a' => 0
+      case 'B' | 'b' => 1
+      case 'C' | 'c' => 2
+      case 'D' | 'd' => 3
+      case 'E' | 'e' => 4
+      case 'F' | 'f' => 5
+      case 'I' | 'i' => 6
+      case 'J' | 'j' => 7
+      case 'K' | 'k' => 8
+      case 'L' | 'l' => 9
       case _ => throw new Exception("bad value")
 
     }

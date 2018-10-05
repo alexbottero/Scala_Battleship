@@ -1,7 +1,7 @@
 /**
   * Created by alexandre on 04/10/2018.
   */
-case class HumanPlayer(name:String,grid: Grid,shots:List[(Int,Int,String)]=List()) extends Player(name,grid){
+case class HumanPlayer(name:String,grid: Grid,shots:List[(Int,Int,String)]=List()) extends Player(name,grid,shots){
 
 
   override def placeShip(ship: Ship): Player = {
