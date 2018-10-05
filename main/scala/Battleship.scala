@@ -65,16 +65,15 @@ object Battleship extends App{
     val shoot=player.play()
     println("Your shoot is :" + shoot._1+" "+shoot._2)
 
-    println(enemyPlayer.getGrid().displayGrid())
 
     val result=enemyPlayer.getGrid().shootGrid(shoot._2,shoot._1)
-    print(result._3.displayGrid())
     println(result._1)
     val newShots=player.getShots():+(shoot._1,shoot._2,result._1)
     val enemyPlayerUpdated=enemyPlayer.copyForGrid(grid=result._3)
     val playerUpdated=player.copyForShots(shots=newShots)
 
-    println(enemyPlayerUpdated.getGrid().displayGrid())
+    println(enemyPlayerUpdated.getGrid().displayGridShot())
+    println(playerUpdated.getGrid().displayGrid())
 
 
     if(enemyPlayerUpdated.loose()){
@@ -90,7 +89,7 @@ object Battleship extends App{
   def placeShips(ships:List[Ship],player:Player):Player={
     if(ships.isEmpty)player
     else {
-      println(player.getName()+" Place the ship of length "+ships.head.numberOfCell)
+      println(player.getName()+" place the ship of length "+ships.head.numberOfCell)
       val updatePlayer=player.placeShip(ships.head)
       placeShips(ships.tail,updatePlayer)
     }

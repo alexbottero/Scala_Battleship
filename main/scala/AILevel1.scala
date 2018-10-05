@@ -5,9 +5,6 @@ import scala.util.Random
   */
 case class AILevel1(name:String="AI Level 1",grid: Grid,shots:List[(Int,Int,String)]=List(),random: Random) extends Player(name,grid,shots){
 
-  val senseValue=Array('h','v')
-  val alphabetValue= Array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
-    'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z')
 
   override def placeShip(ship: Ship): Player = {
     val x = alphabetValue(random.nextInt(grid.columns))
@@ -31,5 +28,5 @@ case class AILevel1(name:String="AI Level 1",grid: Grid,shots:List[(Int,Int,Stri
   }
   override def copyForGrid(grid: Grid): Player = this.copy(grid=grid)
 
-  override def copyForShots(shots: List[(Int, Int, String)]): Player = this.copy(grid=grid)
+  override def copyForShots(shots: List[(Int, Int, String)]): Player = this.copy(shots=shots)
 }

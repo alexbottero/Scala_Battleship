@@ -34,7 +34,8 @@ case class HumanPlayer(name:String,grid: Grid,shots:List[(Int,Int,String)]=List(
     println("Submit x coordinate between A and J")
 
     try{
-      scala.io.StdIn.readChar()
+      val x =scala.io.StdIn.readChar()
+      if (alphabetValue.contains(x)) x else enterX()
     }catch {
       case _: Exception => enterX()
     }

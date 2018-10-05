@@ -38,7 +38,6 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[String]],ships:List[Ship
     if (cellsToUpdate.length==0) grid
     else {
       val coordCellUpdate=cellsToUpdate.head
-      println(coordCellUpdate+"  ")
       val newGrid=Array.ofDim[String](this.rows,this.columns)
       grid.zipWithIndex.foreach{
         case(row,i) => {
@@ -115,15 +114,33 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[String]],ships:List[Ship
     var gridToDisplay="    A   B   C   D   E   F   I   J   K   L  \n" +
       "   ________________________________________\n"
     this.grid.zipWithIndex.foreach {
-      case(x,i) => {
-        if(i != 0) gridToDisplay = gridToDisplay+("|\n"+i+" ")
-        else gridToDisplay = gridToDisplay+("0 ")
+      case(x,i) =>
+        if(i != 0) gridToDisplay +="|\n"+i+" "
+        else gridToDisplay +="0 "
         x.foreach { x => {
-          gridToDisplay = gridToDisplay+("|")+"_"+x+"_"
-        }}
+          gridToDisplay = gridToDisplay+"|_"+x+"_"
+         }
+        }
       }
-    }
-    gridToDisplay = gridToDisplay+("|\n\n")
+    gridToDisplay +="|\n\n"
+    gridToDisplay
+  }
+
+  def displayGridShot():String={
+    var gridToDisplay="    A   B   C   D   E   F   I   J   K   L  \n" +
+      "   ________________________________________\n"
+    this.grid.zipWithIndex.foreach {
+      case(x,i) =>
+        if(i != 0) gridToDisplay +=("|\n"+i+" ")
+        else gridToDisplay += "0 "
+        x.foreach { x => {
+          gridToDisplay +="|_"
+          if (x=="H"||x=="X") gridToDisplay+=x else gridToDisplay+=" "
+          gridToDisplay+="_"
+          }
+        }
+      }
+    gridToDisplay = gridToDisplay+"|\n\n"
     gridToDisplay
   }
 

@@ -2,6 +2,9 @@
   * Created by alexandre on 01/10/2018.
   */
 abstract class Player( name:String,  grid: Grid, shots:List[(Int,Int,String)]=List()) {
+  val senseValue=Array('h','v')
+  val alphabetValue= Array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+    'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z')
 
   def placeShip(ship: Ship):Player
   def play():(Int,Int)
