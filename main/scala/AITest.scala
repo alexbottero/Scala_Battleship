@@ -1,4 +1,9 @@
+
+import java.io.{BufferedWriter, FileWriter}
+
+
 import scala.util.Random
+
 
 /**
   * Created by alexandre on 05/10/2018.
@@ -9,18 +14,20 @@ object AITest extends App{
   val NB_GAME=10
   var winPlayer1=0
   var winPlayer2=0
+  var result=""
 
   println("--------- Test AI----------")
   println("AI1 vs AI2")
-  //TestAI1vsAI2Loop(100)
+  TestAI1vsAI2Loop(100)
   TestAI1vsAI3Loop(100)
-  //TestAI2vsAI3Loop(100)
+  TestAI2vsAI3Loop(100)
+  fileCsv(result)
 
 
   def TestAI1vsAI2Loop(nbGame:Int): Unit = {
     val typeGame="AI1vsAI2"
     if (nbGame==0){
-      print(winPlayer1+" "+winPlayer2)
+      result+="AI Level Beginner;"+winPlayer1+";AI Level Medium;"+winPlayer2+";\n"
       winPlayer1=0
       winPlayer2=0
     }else{
@@ -31,13 +38,11 @@ object AITest extends App{
       val playersWithShips1=placeShips(ships,player1)
 
       val playersWithShips2=placeShips(ships,player2)
-      println(playersWithShips1.getGrid().displayGrid)
-      println(playersWithShips2.getGrid().displayGrid())
       if(nbGame%2==0){
-        gameLoop(Game(playersWithShips1,playersWithShips2,playersWithShips1),nbGame,typeGame)
+        gameLoop(Game(playersWithShips1,playersWithShips2),nbGame,typeGame)
       }
       else{
-        gameLoop(Game(playersWithShips2,playersWithShips1,playersWithShips2),nbGame,typeGame)
+        gameLoop(Game(playersWithShips2,playersWithShips1),nbGame,typeGame)
       }
     }
 
@@ -47,7 +52,8 @@ object AITest extends App{
   def TestAI1vsAI3Loop(nbGame:Int): Unit = {
     val typeGame="AI1vsAI3"
     if (nbGame==0){
-      print(winPlayer1+" "+winPlayer2)
+
+      result+="AI Level Beginner;"+winPlayer1+";AI Level Hard;"+winPlayer2+";\n"
       winPlayer1=0
       winPlayer2=0
     }else{
@@ -58,10 +64,10 @@ object AITest extends App{
       val playersWithShips1=placeShips(ships,player1)
       val playersWithShips2=placeShips(ships,player2)
       if(nbGame%2==0){
-        gameLoop(Game(playersWithShips1,playersWithShips2,playersWithShips1),nbGame,typeGame)
+        gameLoop(Game(playersWithShips1,playersWithShips2),nbGame,typeGame)
       }
       else{
-        gameLoop(Game(playersWithShips2,playersWithShips1,playersWithShips2),nbGame,typeGame)
+        gameLoop(Game(playersWithShips2,playersWithShips1),nbGame,typeGame)
       }
     }
 
@@ -71,22 +77,22 @@ object AITest extends App{
   def TestAI2vsAI3Loop(nbGame:Int): Unit = {
     val typeGame="AI2vsAI3"
     if (nbGame==0){
-      print(winPlayer1+" "+winPlayer2)
+      result+="AI Level Medium;"+winPlayer1+";AI Level Hard;"+winPlayer2+";\n"
       winPlayer1=0
       winPlayer2=0
     }else{
-      //Ship(3,3,3),Ship(4,4,4), Ship(5,5,5)
-      val ships=List(Ship(1,2,2),Ship(2,3,3))
+
+      val ships=List(Ship(1,2,2),Ship(2,3,3),Ship(3,3,3),Ship(4,4,4), Ship(5,5,5))
 
       val player1=AILevel2(grid=new Grid(HEIGHT_GRID,LENGTH_GRID),random=new Random())
       val player2=AILevel3(grid=new Grid(HEIGHT_GRID,LENGTH_GRID),random=new Random())
       val playersWithShips1=placeShips(ships,player1)
       val playersWithShips2=placeShips(ships,player2)
       if(nbGame%2==0){
-        gameLoop(Game(playersWithShips1,playersWithShips2,playersWithShips1),nbGame,typeGame)
+        gameLoop(Game(playersWithShips1,playersWithShips2),nbGame,typeGame)
       }
       else{
-        gameLoop(Game(playersWithShips2,playersWithShips1,playersWithShips2),nbGame,typeGame)
+        gameLoop(Game(playersWithShips2,playersWithShips1),nbGame,typeGame)
       }
 
     }
@@ -107,11 +113,10 @@ object AITest extends App{
     val playerUpdated=player.copyForShots(shots=newShots)
 
     if(enemyPlayerUpdated.loose()){
-        println("Game over")
-        endGame(Game(enemyPlayerUpdated,playerUpdated,playerUpdated),nbGame,typeG)
+        endGame(Game(enemyPlayerUpdated,playerUpdated),nbGame,typeG)
     }
     else {
-      gameLoop(Game(enemyPlayerUpdated,playerUpdated,playerUpdated),nbGame,typeG)
+      gameLoop(Game(enemyPlayerUpdated,playerUpdated),nbGame,typeG)
     }
   }
 
@@ -119,16 +124,15 @@ object AITest extends App{
     typeG match{
       case "AI1vsAI2"=>{
         if(game.p1.getName()=="AI Level 1") winPlayer2+=1 else winPlayer1+=1
-        println("End of game : "+winPlayer1+" "+winPlayer2)
         TestAI1vsAI2Loop(nbGame-1)
       }
       case "AI1vsAI3"=>{
         if(game.p1.getName()=="AI Level 1") winPlayer2+=1 else winPlayer1+=1
-        TestAI1vsAI2Loop(nbGame-1)
+        TestAI1vsAI3Loop(nbGame-1)
       }
       case "AI2vsAI3"=>{
         if(game.p1.getName()=="AI Level 2") winPlayer2+=1 else winPlayer1+=1
-        TestAI1vsAI2Loop(nbGame-1)
+        TestAI2vsAI3Loop(nbGame-1)
 
       }
     }
@@ -138,9 +142,17 @@ object AITest extends App{
     if(ships.isEmpty)player
     else {
       val updatedPlayer=player.placeShip(ships.head)
-      println(updatedPlayer.getGrid().displayGrid())
       placeShips(ships.tail,updatedPlayer)
     }
+  }
+
+  def fileCsv(s:String): Unit ={
+    val outputFile = new BufferedWriter(new FileWriter("ai_proof.csv"))
+    outputFile.write(result)
+    outputFile.close()
+    result=""
+
+
   }
 
 }

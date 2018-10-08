@@ -30,7 +30,7 @@ object Battleship extends App{
         val playersWithShips2=placeShips(ships,player2)
 
         println(playersWithShips1.getName()+ " Start the game")
-        gameLoop(Game(playersWithShips1,playersWithShips2,playersWithShips1))
+        gameLoop(Game(playersWithShips1,playersWithShips2))
 
 
 
@@ -48,7 +48,7 @@ object Battleship extends App{
         val playersWithShips1=placeShips(ships,player1)
         val playersWithShips2=placeShips(ships,player2)
         println(playersWithShips1.getName()+ " Start the game")
-        gameLoop(Game(playersWithShips1,playersWithShips2,playersWithShips1))
+        gameLoop(Game(playersWithShips1,playersWithShips2))
       }
 
 
@@ -78,10 +78,10 @@ object Battleship extends App{
 
     if(enemyPlayerUpdated.loose()){
       println(player.getName() +" Win")
-      endLoop(Game(enemyPlayerUpdated,playerUpdated,player))
+      endLoop(Game(enemyPlayerUpdated,playerUpdated))
     }
     else {
-      gameLoop(Game(enemyPlayerUpdated,playerUpdated,player))
+      gameLoop(Game(enemyPlayerUpdated,playerUpdated))
     }
   }
 

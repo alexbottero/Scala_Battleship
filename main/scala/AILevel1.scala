@@ -15,7 +15,6 @@ case class AILevel1(name:String="AI Level 1",grid: Grid,shots:List[(Int,Int,Stri
       this.copy(grid=newGrid)
     }catch{
       case _:Exception=>{
-        println("bad position for the ship")
         placeShip(ship)
       }
     }

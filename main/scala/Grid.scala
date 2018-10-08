@@ -64,7 +64,6 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[String]],ships:List[Ship
   }
 
   def futureCellsOfShip(x:Int,y:Int,sense:Char,shipSize:Int,cellsShip:Array[(Int,Int)]): Array[(Int,Int)] ={
-    println((y,x))
     if (shipSize==1) cellsShip:+(y,x)
     else{
       val newCellsShip=cellsShip:+(y,x)

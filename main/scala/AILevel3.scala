@@ -4,7 +4,7 @@ import scala.util.Random
 /**
   * Created by alexandre on 05/10/2018.
   */
-case class AILevel3(name:String="AI Level 2",grid: Grid,shots:List[(Int,Int,String)]=List(),random: Random) extends Player(name,grid,shots) {
+case class AILevel3(name:String="AI Level 3",grid: Grid,shots:List[(Int,Int,String)]=List(),random: Random) extends Player(name,grid,shots) {
 
 
   override def placeShip(ship: Ship): Player = {
@@ -16,19 +16,20 @@ case class AILevel3(name:String="AI Level 2",grid: Grid,shots:List[(Int,Int,Stri
       this.copy(grid=newGrid)
     }catch{
       case _:Exception=>{
-        print("bad position for the ship")
         placeShip(ship)
       }
     }
   }
 
   override def play(): (Int, Int) = {
-    @tailrec
     def playRec(shotsHit: List[(Int, Int)]): (Int, Int) = {
       if (shotsHit.isEmpty) {
+
         val x = random.nextInt(grid.columns)
         val y = random.nextInt(grid.rows)
-        (x, y)
+        if(shots.map(x=>(x._1,x._2)).contains((x,y))) {
+          playRec(shotsHit)
+        } else (x,y)
       }
       else {
         if (shotsPossible(shotsHit.head._1, shotsHit.head._2).isEmpty) {
@@ -47,8 +48,12 @@ case class AILevel3(name:String="AI Level 2",grid: Grid,shots:List[(Int,Int,Stri
     }
   def shotsPossible(x:Int,y:Int):List[(Int,Int)]={
     val shotsArround=List((x-1,y),(x+1,y),(x,y-1),(x,y+1))
-    val shotsArroundNotTouch=shotsArround.filter(p=>shots.map(x=>(x._1,x._2)).contains((x,y)))
-    shotsArroundNotTouch.filter(p=>p._1 <0 && p._1>grid.rows-1&& p._2 <0 && p._2>grid.rows-1)
+
+    val shotMap=this.shots.map(x=>(x._1,x._2))
+
+    val shotsArroundNotTouch=shotsArround.filterNot(p=>shotMap.contains((p._1,p._2)))
+
+    shotsArroundNotTouch.filter(p=>p._1 >=0 && p._1<=grid.rows-1&& p._2 >=0 && p._2<=grid.rows-1)
     }
 
   override def copyForGrid(grid: Grid): Player = this.copy(grid=grid)
