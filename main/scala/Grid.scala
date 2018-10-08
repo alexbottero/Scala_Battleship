@@ -24,14 +24,9 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[String]],ships:List[Ship
       if (!checkInput(xInt,y,sense,this.rows,this.columns)) throw new Exception("Invalid inputs (positions or sense value)")
       val futureCellsShip=this.futureCellsOfShip(xInt,y,sense,ship.numberOfCell,Array())
       futureCellsShip.foreach(t=>{
-
         if(t._1 < 0||t._2 < 0||t._2 >= this.rows||t._1 >= this.columns) throw new Exception("Ship is outside the grid")
-
         if(this.grid(t._1)(t._2)!=" "){
           throw new Exception("Cell already used")
-        }
-        else{
-          println("value " +this.grid(y)(xInt))
         }
       })
       val newGrid=this.updateGrid(this.grid,futureCellsShip,ship.id.toString)

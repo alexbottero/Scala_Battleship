@@ -12,7 +12,9 @@ object AITest extends App{
 
   println("--------- Test AI----------")
   println("AI1 vs AI2")
-  TestAI1vsAI2Loop(100)
+  //TestAI1vsAI2Loop(100)
+  TestAI1vsAI3Loop(100)
+  //TestAI2vsAI3Loop(100)
 
 
   def TestAI1vsAI2Loop(nbGame:Int): Unit = {
@@ -125,7 +127,7 @@ object AITest extends App{
         TestAI1vsAI2Loop(nbGame-1)
       }
       case "AI2vsAI3"=>{
-        if(game.p1.getName()=="AI Level 2") winPlayer1+=1 else winPlayer2+=1
+        if(game.p1.getName()=="AI Level 2") winPlayer2+=1 else winPlayer1+=1
         TestAI1vsAI2Loop(nbGame-1)
 
       }

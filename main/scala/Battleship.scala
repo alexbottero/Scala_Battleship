@@ -43,7 +43,7 @@ object Battleship extends App{
         val player2=typeG match {
           case 2=>AILevel1(grid=new Grid(HEIGHT_GRID,LENGTH_GRID),random=new Random())
           case 3=> AILevel2(grid=new Grid(HEIGHT_GRID,LENGTH_GRID),random=new Random())
-          case 4=> AILevel1(grid=new Grid(HEIGHT_GRID,LENGTH_GRID),random=new Random())
+          case 4=> AILevel3(grid=new Grid(HEIGHT_GRID,LENGTH_GRID),random=new Random())
         }
         val playersWithShips1=placeShips(ships,player1)
         val playersWithShips2=placeShips(ships,player2)
