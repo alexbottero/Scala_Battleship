@@ -7,7 +7,7 @@ import scala.util.Random
 object Battleship extends App{
 
 
-  val TYPE_OF_GAME=List("1: Human vs Human","2: Human vs IA level 1","3: Human vs IA level 2","4: Human vs IA level 3")
+  val TYPE_OF_GAME=List("1: Human vs Human","2: Human vs AI level 1","3: Human vs AI level 2","4: Human vs AI level 3")
   val HEIGHT_GRID=10
   val LENGTH_GRID=10
 
@@ -63,7 +63,7 @@ object Battleship extends App{
     val enemyPlayer=game.p2
     println(player.getName+" is your turn")
     val shoot=player.play()
-    println("Your shoot is :" + shoot._1+" "+shoot._2)
+    println("Your shoot is :" + shoot._2+" "+shoot._1)
 
 
     val result=enemyPlayer.getGrid().shootGrid(shoot._2,shoot._1)
@@ -78,7 +78,7 @@ object Battleship extends App{
 
     if(enemyPlayerUpdated.loose()){
       println(player.getName() +" Win")
-      endLoop(Game(enemyPlayer,enemyPlayerUpdated,player))
+      endLoop(Game(enemyPlayerUpdated,playerUpdated,player))
     }
     else {
       gameLoop(Game(enemyPlayerUpdated,playerUpdated,player))
@@ -90,8 +90,8 @@ object Battleship extends App{
     if(ships.isEmpty)player
     else {
       println(player.getName()+" place the ship of length "+ships.head.numberOfCell)
-      val updatePlayer=player.placeShip(ships.head)
-      placeShips(ships.tail,updatePlayer)
+      val updatedPlayer=player.placeShip(ships.head)
+      placeShips(ships.tail,updatedPlayer)
     }
   }
 
@@ -131,6 +131,11 @@ object Battleship extends App{
 
   def endLoop(game: Game): Unit ={
     print("End of game")
+    print("Do you want to restart? y/n")
+    val result=scala.io.StdIn.readLine()
+    if (result=="y") initLoop()
+    else print("Thanks for playing")
+
   }
 
 }

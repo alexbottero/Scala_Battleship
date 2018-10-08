@@ -24,6 +24,7 @@ case class HumanPlayer(name:String,grid: Grid,shots:List[(Int,Int,String)]=List(
   override def play(): (Int, Int) = {
     val x=enterX()
     val y=enterY()
+    println(grid.letterToNumber(x),y)
     if (this.checkInput(grid.letterToNumber(x),y,grid.rows,grid.columns)) (grid.letterToNumber(x),y)
     else play()
 

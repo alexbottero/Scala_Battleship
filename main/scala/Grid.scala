@@ -24,9 +24,15 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[String]],ships:List[Ship
       if (!checkInput(xInt,y,sense,this.rows,this.columns)) throw new Exception("Invalid inputs (positions or sense value)")
       val futureCellsShip=this.futureCellsOfShip(xInt,y,sense,ship.numberOfCell,Array())
       futureCellsShip.foreach(t=>{
+
         if(t._1 < 0||t._2 < 0||t._2 >= this.rows||t._1 >= this.columns) throw new Exception("Ship is outside the grid")
 
-        if(this.grid(xInt)(y)!=" ") throw new Exception("Cell already used")
+        if(this.grid(t._1)(t._2)!=" "){
+          throw new Exception("Cell already used")
+        }
+        else{
+          println("value " +this.grid(y)(xInt))
+        }
       })
       val newGrid=this.updateGrid(this.grid,futureCellsShip,ship.id.toString)
       this.copy(grid=newGrid,ships = this.ships:+ship)
@@ -40,20 +46,20 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[String]],ships:List[Ship
       val coordCellUpdate=cellsToUpdate.head
       val newGrid=Array.ofDim[String](this.rows,this.columns)
       grid.zipWithIndex.foreach{
-        case(row,i) => {
-          if(i == coordCellUpdate._2) {
-            row.zipWithIndex.foreach{
-              case(value, j) => {
-                if(j == coordCellUpdate._1) {
-                  newGrid(i)(j) = newCell
+        case(list,row) => {
+          if(row == coordCellUpdate._1) {
+            list.zipWithIndex.foreach{
+              case(value, col) => {
+                if(col == coordCellUpdate._2) {
+                  newGrid(row)(col) = newCell
                   }
                 else {
-                  newGrid(i)(j) = value
+                  newGrid(row)(col) = value
                 }
               }
             }
           } else {
-            newGrid(i) = row
+            newGrid(row) = list
           }
         }
       }
@@ -63,9 +69,10 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[String]],ships:List[Ship
   }
 
   def futureCellsOfShip(x:Int,y:Int,sense:Char,shipSize:Int,cellsShip:Array[(Int,Int)]): Array[(Int,Int)] ={
-    if (shipSize==1) cellsShip:+(x,y)
+    println((y,x))
+    if (shipSize==1) cellsShip:+(y,x)
     else{
-      val newCellsShip=cellsShip:+(x,y)
+      val newCellsShip=cellsShip:+(y,x)
       if (sense=='h') futureCellsOfShip(x+1,y,sense,shipSize-1,newCellsShip)
       else futureCellsOfShip(x,y+1,sense,shipSize-1,newCellsShip)
     }
@@ -74,12 +81,11 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[String]],ships:List[Ship
 
   def shootGrid(x: Int, y: Int):  (String,Option[Ship],Grid) = {
     if(this.grid(x)(y)!=" ") {
-
       if(this.grid(x)(y)=="H"||this.grid(x)(y)=="X") {
 
         ("Already hit",None, this.copy())
       } else {
-        val newGrid = this.updateGrid(this.grid, Array((y,x)),  "H")
+        val newGrid = this.updateGrid(this.grid, Array((x,y)), "H")
         val hitShip = this.ships.filter(_.id.toString == this.grid(x)(y)).head.touch()
         val newShips = this.ships.filterNot(_.id.toString == this.grid(x)(y)) :+ hitShip
 

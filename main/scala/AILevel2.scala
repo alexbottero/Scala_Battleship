@@ -24,7 +24,9 @@ case class AILevel2(name:String="AI Level 2",grid: Grid,shots:List[(Int,Int,Stri
   override def play(): (Int, Int) = {
     val x = random.nextInt(grid.columns)
     val y = random.nextInt(grid.rows)
-    if(shots.map(x=>(x._1,x._2)).contains((x,y))) play() else (x,y)
+    if(shots.map(x=>(x._1,x._2)).contains((x,y))) {
+      play()
+    } else (x,y)
 
 
   }
