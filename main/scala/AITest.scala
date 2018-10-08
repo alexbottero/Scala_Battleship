@@ -19,7 +19,9 @@ object AITest extends App{
   println("--------- Test AI----------")
   println("AI1 vs AI2")
   TestAI1vsAI2Loop(100)
+  println("AI1 vs AI3")
   TestAI1vsAI3Loop(100)
+  println("AI2 vs AI3")
   TestAI2vsAI3Loop(100)
   fileCsv(result)
 

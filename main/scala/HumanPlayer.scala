@@ -3,7 +3,11 @@
   */
 case class HumanPlayer(name:String,grid: Grid,shots:List[(Int,Int,String)]=List()) extends Player(name,grid,shots){
 
-
+  /**
+    * Ask the input to the player and try to place the boat
+    * @param ship ship to add to the player
+    * @return a new player with the new ship added
+    */
   override def placeShip(ship: Ship): Player = {
     val x=enterX()
     val y=enterY()
@@ -21,6 +25,10 @@ case class HumanPlayer(name:String,grid: Grid,shots:List[(Int,Int,String)]=List(
 
   }
 
+  /**
+    * ask the input to the player and shoot on it if there are correct
+    * @return shoot's coordinates
+    */
   override def play(): (Int, Int) = {
     val x=enterX()
     val y=enterY()
@@ -31,6 +39,10 @@ case class HumanPlayer(name:String,grid: Grid,shots:List[(Int,Int,String)]=List(
   }
 
 
+  /**
+    *
+    * @return char value fot the shot
+    */
   def enterX():Char={
     println("Submit x coordinate between A and J")
 
@@ -42,6 +54,10 @@ case class HumanPlayer(name:String,grid: Grid,shots:List[(Int,Int,String)]=List(
     }
   }
 
+  /**
+    *
+    * @return Int value for the shot
+    */
   def enterY():Int={
     println("Submit y coordinate between 0 and 9")
     try{
@@ -51,6 +67,10 @@ case class HumanPlayer(name:String,grid: Grid,shots:List[(Int,Int,String)]=List(
     }
   }
 
+  /**
+    *
+    * @return v or h to represent the ship sense to place the boat
+    */
   def enterSense():Char={
     println("Submit sense h for vertical and v for horizontal")
     try{

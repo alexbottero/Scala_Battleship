@@ -5,25 +5,32 @@
 
 case class Grid (rows:Int, columns:Int,grid:Array[Array[String]],ships:List[Ship]){
 
-
+  /**
+    * Init the grid with the default value " "
+    * @param rows number of rows of the grid
+    * @param col number of columns of the grid
+    */
   def this(rows:Int,col:Int){
     this(rows,col,Array.ofDim[String](rows,col).map(x=>x.map(x=>" ")),List())
   }
 
   /**
-    *
+    *Method to add a ship on a grid
     * @param x coord x axis
     * @param y coord y axis
     * @param sense h for horizontal or v vertical
     * @param ship to add to the grid
-    * @return New grid whith the new ship
+    * @return New grid whith the new ship added
     *
     */
   def addShipOnGrid(x:Char,y:Int,sense:Char,ship: Ship): Grid ={
       val xInt=letterToNumber(x)
+
       if (!checkInput(xInt,y,sense,this.rows,this.columns)) throw new Exception("Invalid inputs (positions or sense value)")
+
       val futureCellsShip=this.futureCellsOfShip(xInt,y,sense,ship.numberOfCell,Array())
-      futureCellsShip.foreach(t=>{
+
+    futureCellsShip.foreach(t=>{
         if(t._1 < 0||t._2 < 0||t._2 >= this.rows||t._1 >= this.columns) throw new Exception("Ship is outside the grid")
         if(this.grid(t._1)(t._2)!=" "){
           throw new Exception("Cell already used")
@@ -34,6 +41,13 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[String]],ships:List[Ship
 
   }
 
+  /**
+    * Method to update the value inside the grid
+    * @param grid current grid that will be updated
+    * @param cellsToUpdate array of cells that will be updated
+    * @param newCell value for the cells updated
+    * @return A new grid with the cells updated
+    */
   def updateGrid(grid:Array[Array[String]], cellsToUpdate:Array[(Int,Int)], newCell: String): Array[Array[String]] ={
 
     if (cellsToUpdate.length==0) grid
@@ -63,6 +77,15 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[String]],ships:List[Ship
     }
   }
 
+  /**
+    * Compute the future cell of a ship
+    * @param x value x of the started cell
+    * @param y value y of the started cell
+    * @param sense sense of the ship vertical or horizontal
+    * @param shipSize size of the ship (2,3,4 or 5)
+    * @param cellsShip All the cell of the ship ( Initial value Array())
+    * @return All the cell of the ship Array of (y,x)
+    */
   def futureCellsOfShip(x:Int,y:Int,sense:Char,shipSize:Int,cellsShip:Array[(Int,Int)]): Array[(Int,Int)] ={
     if (shipSize==1) cellsShip:+(y,x)
     else{
@@ -73,6 +96,12 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[String]],ships:List[Ship
 
   }
 
+  /**
+    * Method to shoot on the enemy grid
+    * @param x x value of the shot
+    * @param y y value of the shot
+    * @return the result of the shot, the ship hit if there is one,the new grid updated
+    */
   def shootGrid(x: Int, y: Int):  (String,Option[Ship],Grid) = {
     if(this.grid(x)(y)!=" ") {
       if(this.grid(x)(y)=="H"||this.grid(x)(y)=="X") {
@@ -92,7 +121,54 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[String]],ships:List[Ship
       ("Miss Shot",None, this.copy(grid=newGrid))
     }
   }
+  /**
+    *
+    * @return String representing the grid of the player and the enemy shot on his grid
+    */
+  def displayGrid():String={
+    var gridToDisplay="    A   B   C   D   E   F   I   J   K   L  \n" +
+      "   -------------------------------------------\n"
+    this.grid.zipWithIndex.foreach {
+      case(x,i) =>
+        if(i != 0) gridToDisplay +="|\n"+i+" "
+        else gridToDisplay +="0 "
+        x.foreach { x => {
+          gridToDisplay = gridToDisplay+"|_"+x+"_"
+        }
+        }
+    }
+    gridToDisplay +="|\n\n"
+    gridToDisplay
+  }
 
+  /**
+    *
+    * @return String representing the grid with our shots on the enemy grid
+    */
+  def displayGridShot():String={
+    var gridToDisplay="    A   B   C   D   E   F   I   J   K   L  \n" +
+      "  --------------------------------------------\n"
+    this.grid.zipWithIndex.foreach {
+      case(x,i) =>
+        if(i != 0) gridToDisplay +=("|\n"+i+" ")
+        else gridToDisplay += "0 "
+        x.foreach { x => {
+          gridToDisplay +="|_"
+          if (x=="H"||x=="X") gridToDisplay+=x else gridToDisplay+=" "
+          gridToDisplay+="_"
+        }
+        }
+    }
+    gridToDisplay = gridToDisplay+"|\n\n"
+    gridToDisplay
+  }
+
+
+  /**
+    * Helper method to transform a char in int
+    * @param char value in Char
+    * @return value in Int
+    */
   def letterToNumber(char: Char): Int = {
     char match {
       case 'A' | 'a' => 0
@@ -110,41 +186,16 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[String]],ships:List[Ship
     }
   }
 
-  def displayGrid():String={
-    var gridToDisplay="    A   B   C   D   E   F   I   J   K   L  \n" +
-      "   ________________________________________\n"
-    this.grid.zipWithIndex.foreach {
-      case(x,i) =>
-        if(i != 0) gridToDisplay +="|\n"+i+" "
-        else gridToDisplay +="0 "
-        x.foreach { x => {
-          gridToDisplay = gridToDisplay+"|_"+x+"_"
-         }
-        }
-      }
-    gridToDisplay +="|\n\n"
-    gridToDisplay
-  }
 
-  def displayGridShot():String={
-    var gridToDisplay="    A   B   C   D   E   F   I   J   K   L  \n" +
-      "   ________________________________________\n"
-    this.grid.zipWithIndex.foreach {
-      case(x,i) =>
-        if(i != 0) gridToDisplay +=("|\n"+i+" ")
-        else gridToDisplay += "0 "
-        x.foreach { x => {
-          gridToDisplay +="|_"
-          if (x=="H"||x=="X") gridToDisplay+=x else gridToDisplay+=" "
-          gridToDisplay+="_"
-          }
-        }
-      }
-    gridToDisplay = gridToDisplay+"|\n\n"
-    gridToDisplay
-  }
-
-
+  /**
+    * Helper method for check input
+    * @param x value
+    * @param y value
+    * @param sense sense of the ship
+    * @param rows rows of the grid
+    * @param columns columns of the grid
+    * @return true if all the inputs are correct
+    */
   def checkInput(x:Int, y:Int, sense:Char,rows:Int,columns:Int):Boolean={
 
     if(y <0 || y>rows-1|| x <0 ||x>columns-1 || (sense!='h'&& sense!='v')) false

@@ -6,7 +6,11 @@ import scala.util.Random
   */
 case class AILevel3(name:String="AI Level 3",grid: Grid,shots:List[(Int,Int,String)]=List(),random: Random) extends Player(name,grid,shots) {
 
-
+  /**
+    * Place the ship randomly
+    * @param ship ship to add to the player
+    * @return a new player with the new ship added
+    */
   override def placeShip(ship: Ship): Player = {
     val x = alphabetValue(random.nextInt(grid.columns))
     val y = random.nextInt(grid.rows)
@@ -21,6 +25,10 @@ case class AILevel3(name:String="AI Level 3",grid: Grid,shots:List[(Int,Int,Stri
     }
   }
 
+  /**
+    * Don't shoot 2 times a the same position and if it hit a cell try to hit all  the cell around
+    * @return shoot's coordinates
+    */
   override def play(): (Int, Int) = {
     def playRec(shotsHit: List[(Int, Int)]): (Int, Int) = {
       if (shotsHit.isEmpty) {

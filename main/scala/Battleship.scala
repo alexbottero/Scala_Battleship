@@ -13,13 +13,16 @@ object Battleship extends App{
 
   initLoop()
 
-
+  /**
+    * Init loop to init the game with the type of game, starter, name of player
+    */
   def initLoop(): Unit = {
     println("--------- BattleShip----------")
     val typeG = menu()
     //Ship(3,3,3),Ship(4,4,4), Ship(5,5,5)
     val ships=List(Ship(1,2,2),Ship(2,3,3))
     typeG match {
+        //player vs player
       case 1=>{
         val players = getNamePlayers(typeG)
         val player1=HumanPlayer(name=players._1,new Grid(HEIGHT_GRID,LENGTH_GRID))
@@ -35,6 +38,7 @@ object Battleship extends App{
 
 
       }
+        //player vs AI
       case _=>{
         val players = getNamePlayers(typeG)
         val player1=HumanPlayer(name=players._1,new Grid(HEIGHT_GRID,LENGTH_GRID))
@@ -56,7 +60,10 @@ object Battleship extends App{
 
   }
 
-
+  /**
+    * Loop with the actions of a player, each loop the player is switch until a player loose
+    * @param game game state
+    */
   def gameLoop(game: Game):Unit ={
 
     val player=game.p1
@@ -85,7 +92,6 @@ object Battleship extends App{
     }
   }
 
-
   def placeShips(ships:List[Ship],player:Player):Player={
     if(ships.isEmpty)player
     else {
@@ -95,8 +101,23 @@ object Battleship extends App{
     }
   }
 
+  /**
+    * Loop to restart or not a new game in every type of game
+    * @param game game state
+    */
+  def endLoop(game: Game): Unit ={
+    print("End of game")
+    print("Do you want to restart? y/n")
+    val result=scala.io.StdIn.readLine()
+    if (result=="y") initLoop()
+    else print("Thanks for playing")
 
+  }
 
+  /**
+    *
+    * @return the type of game
+    */
   def menu():Int={
     println("Choose you type of game:")
     TYPE_OF_GAME.foreach({
@@ -112,6 +133,11 @@ object Battleship extends App{
     }
   }
 
+  /**
+    *
+    * @param typeOfGame type of the game started
+    * @return the name of the player(s)
+    */
   def getNamePlayers(typeOfGame:Int):(String,String)={
     typeOfGame match{
       case 1=> {
@@ -121,7 +147,7 @@ object Battleship extends App{
         val namePlayer2=scala.io.StdIn.readLine()
         (namePlayer1,namePlayer2)
       }
-      case 2|3|4=>{
+      case _=>{
         println("Enter name Player 1")
         val namePlayer1=scala.io.StdIn.readLine()
         (namePlayer1,"AI")
@@ -129,14 +155,7 @@ object Battleship extends App{
     }
   }
 
-  def endLoop(game: Game): Unit ={
-    print("End of game")
-    print("Do you want to restart? y/n")
-    val result=scala.io.StdIn.readLine()
-    if (result=="y") initLoop()
-    else print("Thanks for playing")
 
-  }
 
 }
 
