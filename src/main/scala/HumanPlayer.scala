@@ -72,7 +72,9 @@ case class HumanPlayer(name:String,grid: Grid,shots:List[(Int,Int,String)]=List(
   def enterSense():Char={
     println("Submit sense h for vertical and v for horizontal")
     try{
-      scala.io.StdIn.readChar()
+      val sense =scala.io.StdIn.readChar()
+      if(sense!='v'&& sense!='h')enterSense()else sense
+
     }catch {
       case _: Exception => enterSense()
     }

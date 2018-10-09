@@ -48,9 +48,9 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[String]],ships:List[Ship
     * @param newCell value for the cells updated
     * @return A new grid with the cells updated
     */
-  def updateGrid(grid:Array[Array[String]], cellsToUpdate:Array[(Int,Int)], newCell: String): Array[Array[String]] ={
+  def updateGrid(grid:Array[Array[String]], cellsToUpdate:Array[(Int,Int)], newCellValue: String): Array[Array[String]] ={
 
-    if (cellsToUpdate.length==0) grid
+    if (cellsToUpdate.isEmpty) grid
     else {
       val coordCellUpdate=cellsToUpdate.head
       val newGrid=Array.ofDim[String](this.rows,this.columns)
@@ -60,7 +60,7 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[String]],ships:List[Ship
             list.zipWithIndex.foreach{
               case(value, col) => {
                 if(col == coordCellUpdate._2) {
-                  newGrid(row)(col) = newCell
+                  newGrid(row)(col) = newCellValue
                   }
                 else {
                   newGrid(row)(col) = value
@@ -72,7 +72,7 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[String]],ships:List[Ship
           }
         }
       }
-      updateGrid(newGrid,cellsToUpdate.tail,newCell)
+      updateGrid(newGrid,cellsToUpdate.tail,newCellValue)
 
     }
   }
@@ -122,10 +122,10 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[String]],ships:List[Ship
     }
   }
   /**
-    *
+    *   Method not
     * @return String representing the grid of the player and the enemy shot on his grid
     */
-  def displayGrid():String={
+  def displayGrid():Unit={
     var gridToDisplay="    A   B   C   D   E   F   G   H   I   J  \n" +
       "   -------------------------------------------\n"
     this.grid.zipWithIndex.foreach {
@@ -138,14 +138,14 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[String]],ships:List[Ship
         }
     }
     gridToDisplay +="|\n\n"
-    gridToDisplay
+    print(gridToDisplay)
   }
 
   /**
-    *
+    * Methods not RT
     * @return String representing the grid with our shots on the enemy grid
     */
-  def displayGridShot():String={
+  def displayGridShot():Unit={
     var gridToDisplay="    A   B   C   D   E   F   G   H   I   J  \n" +
       "  --------------------------------------------\n"
     this.grid.zipWithIndex.foreach {
@@ -160,7 +160,7 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[String]],ships:List[Ship
         }
     }
     gridToDisplay = gridToDisplay+"|\n\n"
-    gridToDisplay
+    print(gridToDisplay)
   }
 
 

@@ -19,8 +19,8 @@ object Battleship extends App{
   def initLoop(): Unit = {
     println("--------- BattleShip----------")
     val typeG = menu()
-    //Ship(3,3,3),Ship(4,4,4), Ship(5,5,5)
-    val ships=List(Ship(1,2,2),Ship(2,3,3))
+  
+    val ships=List(Ship(1,2,2),Ship(2,3,3),Ship(3,3,3),Ship(4,4,4), Ship(5,5,5))
     typeG match {
         //player vs player
       case 1=>{
@@ -51,7 +51,7 @@ object Battleship extends App{
         }
         val playersWithShips1=placeShips(ships,player1)
         val playersWithShips2=placeShips(ships,player2)
-        println(playersWithShips1.getName()+ " Start the game")
+        println(playersWithShips1.getName()+ " Start the game\n")
         gameLoop(Game(playersWithShips1,playersWithShips2))
       }
 
@@ -79,8 +79,8 @@ object Battleship extends App{
     val enemyPlayerUpdated=enemyPlayer.copyForGrid(grid=result._3)
     val playerUpdated=player.copyForShots(shots=newShots)
 
-    println(enemyPlayerUpdated.getGrid().displayGridShot())
-    println(playerUpdated.getGrid().displayGrid())
+    enemyPlayerUpdated.getGrid().displayGridShot()
+    playerUpdated.getGrid().displayGrid()
 
 
     if(enemyPlayerUpdated.loose()){
