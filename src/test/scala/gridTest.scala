@@ -8,7 +8,9 @@ class gridTest extends FunSuite{
 	val s1= Ship(1,2,2)
 	test("Test addShip: Should return the new grid with a ship on it"){
 		val newGrid=grid.addShipOnGrid('A',0,'v',s1)
+		val newGrid2=grid.addShipOnGrid('A',9,'v',s1)
 		assert(newGrid.ships.length==grid.ships.length+1)
+		assert(!newGrid2.isDefined)
 
 	}
 	test("Test shootGrid: hit,miss already hit"){

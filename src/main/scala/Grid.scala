@@ -126,7 +126,7 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[String]],ships:List[Ship
     * @return String representing the grid of the player and the enemy shot on his grid
     */
   def displayGrid():String={
-    var gridToDisplay="    A   B   C   D   E   F   I   J   K   L  \n" +
+    var gridToDisplay="    A   B   C   D   E   F   G   H   I   J  \n" +
       "   -------------------------------------------\n"
     this.grid.zipWithIndex.foreach {
       case(x,i) =>
@@ -146,7 +146,7 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[String]],ships:List[Ship
     * @return String representing the grid with our shots on the enemy grid
     */
   def displayGridShot():String={
-    var gridToDisplay="    A   B   C   D   E   F   I   J   K   L  \n" +
+    var gridToDisplay="    A   B   C   D   E   F   G   H   I   J  \n" +
       "  --------------------------------------------\n"
     this.grid.zipWithIndex.foreach {
       case(x,i) =>
