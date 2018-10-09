@@ -14,14 +14,12 @@ case class AILevel1(name:String="AI Level 1",grid: Grid,shots:List[(Int,Int,Stri
     val x = alphabetValue(random.nextInt(grid.columns))
     val y = random.nextInt(grid.rows)
     val sense=senseValue(random.nextInt(2))
-    try{
-      val newGrid=this.grid.addShipOnGrid(x,y,sense,ship)
-      this.copy(grid=newGrid)
-    }catch{
-      case _:Exception=>{
+    val newGrid=this.grid.addShipOnGrid(x,y,sense,ship)
+      if(!newGrid.isDefined){
         placeShip(ship)
+      }else{
+        this.copy(grid=newGrid.get)
       }
-    }
   }
 
   /**

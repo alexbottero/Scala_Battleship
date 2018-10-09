@@ -3,8 +3,7 @@
   */
 abstract class Player( name:String,  grid: Grid, shots:List[(Int,Int,String)]=List()) {
   val senseValue=Array('h','v')
-  val alphabetValue= Array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
-    'K', 'L')
+  val alphabetValue= Array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J')
 
   /**
     *

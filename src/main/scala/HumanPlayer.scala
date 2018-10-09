@@ -13,15 +13,13 @@ case class HumanPlayer(name:String,grid: Grid,shots:List[(Int,Int,String)]=List(
     val y=enterY()
     val sense=enterSense()
 
-    try{
       val newGrid=this.grid.addShipOnGrid(x,y,sense,ship)
-      this.copy(grid=newGrid)
-    }catch{
-      case _:Exception=>{
-        println("bad position for the ship")
+      if(!newGrid.isDefined){
+        print("bad position for a boat")
         placeShip(ship)
+      }else{
+        this.copy(grid=newGrid.get)
       }
-    }
 
   }
 

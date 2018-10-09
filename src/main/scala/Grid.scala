@@ -23,21 +23,21 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[String]],ships:List[Ship
     * @return New grid whith the new ship added
     *
     */
-  def addShipOnGrid(x:Char,y:Int,sense:Char,ship: Ship): Grid ={
+  def addShipOnGrid(x:Char,y:Int,sense:Char,ship: Ship): Option[Grid] ={
       val xInt=letterToNumber(x)
 
-      if (!checkInput(xInt,y,sense,this.rows,this.columns)) throw new Exception("Invalid inputs (positions or sense value)")
+      if (!checkInput(xInt,y,sense,this.rows,this.columns)) None
 
       val futureCellsShip=this.futureCellsOfShip(xInt,y,sense,ship.numberOfCell,Array())
 
     futureCellsShip.foreach(t=>{
-        if(t._1 < 0||t._2 < 0||t._2 >= this.rows||t._1 >= this.columns) throw new Exception("Ship is outside the grid")
+        if(t._1 < 0||t._2 < 0||t._2 >= this.rows||t._1 >= this.columns) return None
         if(this.grid(t._1)(t._2)!=" "){
-          throw new Exception("Cell already used")
+          return None
         }
       })
       val newGrid=this.updateGrid(this.grid,futureCellsShip,ship.id.toString)
-      this.copy(grid=newGrid,ships = this.ships:+ship)
+      Some(this.copy(grid=newGrid,ships = this.ships:+ship))
 
   }
 
@@ -177,10 +177,10 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[String]],ships:List[Ship
       case 'D' | 'd' => 3
       case 'E' | 'e' => 4
       case 'F' | 'f' => 5
-      case 'I' | 'i' => 6
-      case 'J' | 'j' => 7
-      case 'K' | 'k' => 8
-      case 'L' | 'l' => 9
+      case 'G' | 'g' => 6
+      case 'H' | 'h' => 7
+      case 'I' | 'i' => 8
+      case 'J' | 'j' => 9
 
     }
   }
