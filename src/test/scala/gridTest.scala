@@ -7,14 +7,14 @@ class gridTest extends FunSuite{
 	val grid =new Grid(10,10,Array.ofDim[String](10,10).map(x=>x.map(x=>" ")),List())
 	val s1= Ship(1,2,2)
 	test("Test addShip: Should return the new grid with a ship on it"){
-		val newGrid=grid.addShipOnGrid('A',0,'v',s1)
+		val newGrid=grid.addShipOnGrid('A',0,'v',s1).get
 		val newGrid2=grid.addShipOnGrid('A',9,'v',s1)
 		assert(newGrid.ships.length==grid.ships.length+1)
 		assert(!newGrid2.isDefined)
 
 	}
 	test("Test shootGrid: hit,miss already hit"){
-		val gridWhithship=grid.addShipOnGrid('A',0,'v',s1)
+		val gridWhithship=grid.addShipOnGrid('A',0,'v',s1).get
 
 		val newGrid = gridWhithship.updateGrid(gridWhithship.grid, Array((0,0)), "H")
 
