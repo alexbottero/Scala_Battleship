@@ -25,4 +25,5 @@ class playerTest extends FunSuite{
     assert( AILevel3(grid=grid,random = new Random()).loose())
     assert( AILevel1(grid=grid2,random = new Random()).loose()==false)
   }
+  
 }

@@ -42,8 +42,8 @@ abstract class Player( name:String,  grid: Grid, shots:List[(Int,Int,String)]=Li
     else true
   }
 
-  /** Methods to use copy in the parent class
-    * Solution provide by Clement Roig to keep using inheritance with case classe
+  /** Methods to use copy with inheritance
+    * Solution provide by Clement Roig to keep using inheritance with case class
     * @param grid grid updated
     * @return a new player with a new grid
     */
