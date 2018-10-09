@@ -106,7 +106,7 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[String]],ships:List[Ship
     if(this.grid(x)(y)!=" ") {
       if(this.grid(x)(y)=="H"||this.grid(x)(y)=="X") {
 
-        ("Already hit",None, this.copy())
+        ("Already hit",None, this)
       } else {
         val newGrid = this.updateGrid(this.grid, Array((x,y)), "H")
         val hitShip = this.ships.filter(_.id.toString == this.grid(x)(y)).head.touch()
@@ -181,7 +181,6 @@ case class Grid (rows:Int, columns:Int,grid:Array[Array[String]],ships:List[Ship
       case 'J' | 'j' => 7
       case 'K' | 'k' => 8
       case 'L' | 'l' => 9
-      case _ => throw new Exception("bad value")
 
     }
   }
